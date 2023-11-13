@@ -30,8 +30,10 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 def actual_po(update, context):
     chat = update.effective_chat
-    text = 'Последняя версия ПО: 1.1.5'
+    f = open('log.log', 'r')
+    text = f.read()
     context.bot.send_message(chat.id, text)
+    f.close()
 
 
 def wake_up(update, context):

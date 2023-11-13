@@ -29,7 +29,7 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 def actual_po(update, context):
     chat = update.effective_chat
-    text = 'Последняя версия ПО: 1.1.2'
+    text = 'Последняя версия ПО: 1.1.5'
     context.bot.send_message(chat.id, text)
 
 

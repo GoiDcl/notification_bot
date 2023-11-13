@@ -3,6 +3,7 @@ from telegram.ext import Updater, CommandHandler
 from dotenv import load_dotenv
 import os
 import logging
+import subprocess
 from logging.handlers import RotatingFileHandler
 
 load_dotenv()
@@ -49,7 +50,17 @@ def wake_up(update, context):
     )
 
 
+def check_version():
+        try:
+            subprocess.Popen(["bash", "./check_version.sh"])
+        except OSError as e:
+            logger.error(e)
+
+
 def main():
+
+    check_version()
+
     updater = Updater(token=BOT_TOKEN)
 
     updater.dispatcher.add_handler(CommandHandler('start', wake_up))

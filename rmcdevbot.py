@@ -3,6 +3,7 @@ from telegram.ext import Updater, CommandHandler
 from dotenv import load_dotenv
 import os
 import logging
+import subprocess
 from logging.handlers import RotatingFileHandler
 
 load_dotenv()
@@ -29,8 +30,10 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 def actual_po(update, context):
     chat = update.effective_chat
-    text = 'Последняя версия ПО: 1.1.2'
+    f = open('log.log', 'r')
+    text = f.read()
     context.bot.send_message(chat.id, text)
+    f.close()
 
 
 def wake_up(update, context):
@@ -49,7 +52,17 @@ def wake_up(update, context):
     )
 
 
+def check_version():
+        try:
+            subprocess.Popen(["sh", "./check_version.sh"])
+        except OSError as e:
+            logger.error(e)
+
+
 def main():
+
+    check_version()
+
     updater = Updater(token=BOT_TOKEN)
 
     updater.dispatcher.add_handler(CommandHandler('start', wake_up))
